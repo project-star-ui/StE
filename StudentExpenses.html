@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Student Expenses Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  :root {
+    --pastel-pink: #ffd6e8;
+    --pastel-blue: #cce7f0;
+    --pastel-green: #d4f1dc;
+    --pastel-yellow: #fff4cc;
+    --pastel-purple: #dcc6f2;
+    --dark-blue: #2c3e50;
+    --text-dark: #2e2e3a;
+    --text-light: #666;
+    --border-radius: 12px;
+    --shadow-soft: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue));
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    color: var(--text-dark);
+    user-select: none;
+  }
+
+  #app {
+    background: white;
+    max-width: 480px;
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: var(--dark-blue);
+  }
+
+  /* Login Screen */
+  #login-screen {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #login-screen label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  #student-id-input {
+    padding: 0.7rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--pastel-blue);
+    outline-offset: 2px;
+    outline-color: var(--pastel-blue);
+    margin-bottom: 1rem;
+    transition: border-color 0.3s;
+  }
+  #student-id-input:focus {
+    border-color: var(--pastel-purple);
+    outline-color: var(--pastel-purple);
+  }
+
+  #login-btn {
+    padding: 0.8rem;
+    background: linear-gradient(135deg, var(--pastel-purple), var(--pastel-pink));
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+  }
+  #login-btn:hover {
+    background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-purple));
+  }
+
+  /* Tracker Screen */
+  #tracker-screen {
+    display: none;
+    flex-direction: column;
+  }
+
+  #welcome-msg {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-blue);
+    font-size: 1.2rem;
+  }
+
+  #date-picker-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  #date-picker {
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--pastel-blue);
+    font-size: 1rem;
+    outline-offset: 2px;
+    outline-color: var(--pastel-blue);
+    transition: border-color 0.3s;
+  }
+  #date-picker:focus {
+    border-color: var(--pastel-purple);
+    outline-color: var(--pastel-purple);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.9rem;
+  }
+
+  .input-group label {
+    font-weight: 600;
+    color: var(--text-dark);
+    flex: 1 0 50%;
+  }
+
+  .input-group input[type="number"], .input-group input[type="text"] {
+    width: 48%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 2px solid var(--pastel-blue);
+    font-size: 1rem;
+    text-align: right;
+    outline-offset: 2px;
+    outline-color: var(--pastel-blue);
+    transition: border-color 0.3s;
+  }
+
+  .input-group input[type="number"]:focus, .input-group input[type="text"]:focus {
+    border-color: var(--pastel-purple);
+    outline-color: var(--pastel-purple);
+  }
+
+  .currency-prefix {
+    font-weight: 600;
+    margin-right: 4px;
+    color: var(--text-dark);
+  }
+
+  #other-expenses-container {
+    margin-bottom: 1rem;
+  }
+
+  .other-expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .other-expense-label {
+    width: 50%;
+    font-weight: 500;
+  }
+  .other-expense-input {
+    width: 45%;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    border: 2px solid var(--pastel-blue);
+    font-size: 1rem;
+    text-align: right;
+    outline-offset: 2px;
+    outline-color: var(--pastel-blue);
+    transition: border-color 0.3s;
+  }
+  .other-expense-input:focus {
+    border-color: var(--pastel-purple);
+    outline-color: var(--pastel-purple);
+  }
+  .btn-remove-expense {
+    background: transparent;
+    border: none;
+    color: var(--pastel-pink);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    user-select: none;
+    transition: color 0.3s;
+  }
+  .btn-remove-expense:hover {
+    color: #ff4d6d;
+  }
+
+  #btn-add-expense {
+    padding: 0.5rem 1rem;
+    background: var(--pastel-yellow);
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--dark-blue);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    align-self: center;
+    transition: background 0.3s ease;
+  }
+  #btn-add-expense:hover {
+    background: #fff9d0;
+  }
+
+  #summary {
+    background: var(--pastel-green);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--dark-blue);
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+  }
+
+  #summary div {
+    flex: 1 1 33%;
+    text-align: center;
+  }
+
+  #footer-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-clear, .btn-edit, .btn-logout {
+    flex: 1 1 30%;
+    margin: 0 0.3rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    font-size: 1.05rem;
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+
+  .btn-clear {
+    background: linear-gradient(135deg, #f5a623, #f7d94c);
+    color: #3d2a00;
+  }
+  .btn-clear:hover {
+    background: linear-gradient(135deg, #f7d94c, #f5a623);
+  }
+
+  .btn-edit {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+  }
+  .btn-edit:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+  }
+
+  .btn-logout {
+    background: linear-gradient(135deg, #f64f59, #c471ed);
+  }
+  .btn-logout:hover {
+    background: linear-gradient(135deg, #c471ed, #f64f59);
+  }
+
+  /* Disabled input when not editing */
+  input[readonly] {
+    background-color: #eee;
+    border-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    #app {
+      padding: 1.2rem;
+    }
+    .input-group label {
+      font-size: 0.9rem;
+    }
+    .input-group input[type="number"], .input-group input[type="text"] {
+      width: 48%;
+      font-size: 0.9rem;
+      padding: 0.4rem 0.5rem;
+    }
+    #btn-add-expense {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+    }
+    .btn-clear, .btn-edit, .btn-logout {
+      font-size: 0.9rem;
+      padding: 0.6rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app" role="main" aria-live="polite">
+  <section id="login-screen" aria-label="Login Screen">
+    <h1>Student Expenses Tracker</h1>
+    <label for="student-id-input">Enter Student ID</label>
+    <input id="student-id-input" type="text" aria-required="true" placeholder="Your Student ID" />
+    <button id="login-btn" aria-label="Login">Login</button>
+  </section>
+
+  <section id="tracker-screen" aria-label="Expense Tracker" tabindex="-1" >
+    <h1 id="welcome-msg"></h1>
+
+    <div id="date-picker-container">
+      <label for="date-picker" class="visually-hidden">Select date</label>
+      <input type="date" id="date-picker" aria-describedby="date-desc" />
+    </div>
+    <div id="date-desc" class="visually-hidden">Select the date to track expenses</div>
+
+    <form id="expense-form" aria-describedby="summary">
+      <div class="input-group">
+        <label for="allowance-input">Allowance (₱)</label>
+        <input type="number" id="allowance-input" min="0" step="0.01" aria-live="polite" aria-atomic="true" />
+      </div>
+      <div class="input-group">
+        <label for="transportation-input">Transportation (₱)</label>
+        <input type="number" id="transportation-input" min="0" step="0.01" aria-live="polite" aria-atomic="true" />
+      </div>
+      <div class="input-group">
+        <label for="meal-input">Meal or Snacks (₱)</label>
+        <input type="number" id="meal-input" min="0" step="0.01" aria-live="polite" aria-atomic="true" />
+      </div>
+
+      <div id="other-expenses-container" aria-live="polite" aria-atomic="true">
+        <h3>Other Expenses</h3>
+      </div>
+
+      <button type="button" id="btn-add-expense" aria-label="Add an Other Expense">+ Add Other Expense</button>
+    </form>
+
+    <div id="summary" role="region" aria-live="polite" aria-atomic="true">
+      <div><span>Allowance:</span> <span id="sum-allowance">₱0.00</span></div>
+      <div><span>Total Expenses:</span> <span id="sum-expenses">₱0.00</span></div>
+      <div><span>Savings:</span> <span id="sum-savings">₱0.00</span></div>
+    </div>
+
+    <div id="footer-buttons">
+      <button id="clear-btn" class="btn-clear" aria-label="Clear today's expenses">Clear</button>
+      <button id="edit-btn" class="btn-edit" aria-label="Edit expenses">Edit</button>
+      <button id="logout-btn" class="btn-logout" aria-label="Logout">Logout</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const loginScreen = document.getElementById('login-screen');
+  const trackerScreen = document.getElementById('tracker-screen');
+  const loginBtn = document.getElementById('login-btn');
+  const studentIdInput = document.getElementById('student-id-input');
+  const welcomeMsg = document.getElementById('welcome-msg');
+
+  const datePicker = document.getElementById('date-picker');
+
+  const allowanceInput = document.getElementById('allowance-input');
+  const transportationInput = document.getElementById('transportation-input');
+  const mealInput = document.getElementById('meal-input');
+
+  const otherExpensesContainer = document.getElementById('other-expenses-container');
+  const btnAddExpense = document.getElementById('btn-add-expense');
+
+  const sumAllowance = document.getElementById('sum-allowance');
+  const sumExpenses = document.getElementById('sum-expenses');
+  const sumSavings = document.getElementById('sum-savings');
+
+  const clearBtn = document.getElementById('clear-btn');
+  const editBtn = document.getElementById('edit-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  let currentStudentId = null;
+  let currentDate = null;
+  let data = {}; // structure: { "studentId": { "YYYY-MM-DD": { allowance, transportation, meal, others: [{label,amount}], savings } } }
+  
+  let isEditing = false;
+
+  // Accessibility helper for visually hidden
+  function addVisuallyHiddenStyle() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+    .visually-hidden { 
+      position: absolute !important; 
+      height: 1px; width: 1px; 
+      overflow: hidden; 
+      clip: rect(1px, 1px, 1px, 1px); 
+      white-space: nowrap; 
+    }`;
+    document.head.appendChild(style);
+  }
+  addVisuallyHiddenStyle();
+
+  // Utility: format number to currency PHP
+  function formatPHP(n) {
+    return '₱' + Number(n || 0).toFixed(2);
+  }
+
+  // Utility: safe parse float, floors negatives to 0
+  function parsePositiveFloat(v) {
+    let n = parseFloat(v);
+    if (isNaN(n) || n < 0) return 0;
+    return n;
+  }
+
+  // Load data from localStorage
+  function loadData() {
+    const stored = localStorage.getItem('studentExpensesData');
+    if (stored) {
+      try {
+        data = JSON.parse(stored);
+      } catch {
+        data = {};
+      }
+    }
+  }
+
+  // Save data to localStorage
+  function saveData() {
+    localStorage.setItem('studentExpensesData', JSON.stringify(data));
+  }
+
+  // Load student data for a date
+  function loadStudentDataForDate(studentId, date) {
+    if (!data[studentId]) return null;
+    return data[studentId][date] || null;
+  }
+
+  // Save student data for a date
+  function saveStudentDataForDate(studentId, date, dayData) {
+    if (!data[studentId]) data[studentId] = {};
+    data[studentId][date] = dayData;
+    saveData();
+  }
+
+  // Calculate savings
+  function calculateSavings(dayData) {
+    const allowance = parsePositiveFloat(dayData.allowance);
+    const transportation = parsePositiveFloat(dayData.transportation);
+    const meal = parsePositiveFloat(dayData.meal);
+    const others = dayData.others || [];
+    const othersTotal = others.reduce((acc, cur) => acc + parsePositiveFloat(cur.amount), 0);
+    const expensesTotal = transportation + meal + othersTotal;
+    const savings = allowance - expensesTotal;
+    return {
+      allowance,
+      expenses: expensesTotal,
+      savings: savings >= 0 ? savings : 0,
+    };
+  }
+  
+  // Create single other expense input item
+  function createOtherExpenseItem(label = '', amount = '') {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('other-expense-item');
+
+    const labelInput = document.createElement('input');
+    labelInput.type = 'text';
+    labelInput.className = 'other-expense-input-label';
+    labelInput.placeholder = 'Label (e.g. Books)';
+    labelInput.value = label;
+    labelInput.setAttribute('aria-label', 'Other expense label');
+    labelInput.disabled = !isEditing;
+
+    const amountInput = document.createElement('input');
+    amountInput.type = 'number';
+    amountInput.min = 0;
+    amountInput.step = '0.01';
+    amountInput.className = 'other-expense-input';
+    amountInput.placeholder = 'Amount (₱)';
+    amountInput.value = amount !== '' ? amount : '';
+    amountInput.setAttribute('aria-label', 'Other expense amount');
+    amountInput.disabled = !isEditing;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'btn-remove-expense';
+    removeBtn.setAttribute('aria-label', 'Remove other expense');
+    removeBtn.innerHTML = '&#x2715;';
+    removeBtn.style.display = isEditing ? 'inline' : 'none';
+    removeBtn.addEventListener('click', () => {
+      wrapper.remove();
+      updateSummary();
+    });
+
+    wrapper.appendChild(labelInput);
+    wrapper.appendChild(amountInput);
+    wrapper.appendChild(removeBtn);
+
+    // On input update summary if editing
+    function onInputChange() {
+      updateSummary();
+    }
+    labelInput.addEventListener('input', onInputChange);
+    amountInput.addEventListener('input', onInputChange);
+
+    return wrapper;
+  }
+
+  // Fill form inputs with data (dayData)
+  function fillForm(dayData) {
+    allowanceInput.value = dayData.allowance ?? '';
+    transportationInput.value = dayData.transportation ?? '';
+    mealInput.value = dayData.meal ?? '';
+
+    // Clear others container
+    otherExpensesContainer.innerHTML = '<h3>Other Expenses</h3>';
+    if (dayData.others && dayData.others.length) {
+      dayData.others.forEach((item) => {
+        otherExpensesContainer.appendChild(createOtherExpenseItem(item.label, item.amount));
+      });
+    }
+    toggleInputs(isEditing);
+  }
+
+  // Read form inputs into dayData object
+  function readFormData() {
+    const allowance = allowanceInput.value.trim();
+    const transportation = transportationInput.value.trim();
+    const meal = mealInput.value.trim();
+
+    const othersElements = otherExpensesContainer.querySelectorAll('.other-expense-item');
+    const others = [];
+    othersElements.forEach((elem) => {
+      const [labelInput, amountInput] = elem.querySelectorAll('input');
+      const label = labelInput.value.trim();
+      const amount = amountInput.value.trim();
+      if (label && amount !== '') {
+        others.push({
+          label,
+          amount: parsePositiveFloat(amount),
+        });
+      }
+    });
+
+    return {
+      allowance: allowance === '' ? 0 : parsePositiveFloat(allowance),
+      transportation: transportation === '' ? 0 : parsePositiveFloat(transportation),
+      meal: meal === '' ? 0 : parsePositiveFloat(meal),
+      others,
+    };
+  }
+
+  // Update summary display
+  function updateSummary() {
+    const dayData = readFormData();
+    const result = calculateSavings(dayData);
+    sumAllowance.textContent = formatPHP(result.allowance);
+    sumExpenses.textContent = formatPHP(result.expenses);
+    sumSavings.textContent = formatPHP(result.savings);
+  }
+
+  // Toggle inputs readonly based on isEditing
+  function toggleInputs(enableEdit) {
+    allowanceInput.readOnly = !enableEdit;
+    transportationInput.readOnly = !enableEdit;
+    mealInput.readOnly = !enableEdit;
+    otherExpensesContainer.querySelectorAll('input').forEach(input => {
+      input.disabled = !enableEdit;
+    });
+    otherExpensesContainer.querySelectorAll('.btn-remove-expense').forEach(btn => {
+      btn.style.display = enableEdit ? 'inline' : 'none';
+    });
+    btnAddExpense.disabled = !enableEdit;
+    allowanceInput.classList.toggle('readonly', !enableEdit);
+    transportationInput.classList.toggle('readonly', !enableEdit);
+    mealInput.classList.toggle('readonly', !enableEdit);
+  }
+
+  // Switch between view mode and edit mode
+  function toggleEditMode() {
+    isEditing = !isEditing;
+    toggleInputs(isEditing);
+    editBtn.textContent = isEditing ? 'Save' : 'Edit';
+    if (!isEditing) {
+      // Save current form data to storage
+      const dayData = readFormData();
+      const calc = calculateSavings(dayData);
+      dayData.savings = calc.savings;
+      saveStudentDataForDate(currentStudentId, currentDate, dayData);
+      updateSummary();
+    }
+  }
+
+  // Clear today's data (asking for confirmation)
+  function clearData() {
+    if (!confirm('Are you sure you want to clear all data for this date?')) return;
+    if (data[currentStudentId]) {
+      delete data[currentStudentId][currentDate];
+      saveData();
+    }
+    fillForm({ allowance: 0, transportation: 0, meal: 0, others: [] });
+    updateSummary();
+  }
+
+  // Logout function resets everything
+  function logout() {
+    currentStudentId = null;
+    currentDate = null;
+    isEditing = false;
+    data = data || {};
+    toggleInputs(false);
+    loginScreen.style.display = 'flex';
+    trackerScreen.style.display = 'none';
+    studentIdInput.value = '';
+    welcomeMsg.textContent = '';
+  }
+
+  // Change date handler
+  function changeDate(date) {
+    currentDate = date;
+    const dayData = loadStudentDataForDate(currentStudentId, currentDate) || { allowance: 0, transportation: 0, meal: 0, others: [] };
+    fillForm(dayData);
+    updateSummary();
+    isEditing = false;
+    toggleInputs(false);
+    editBtn.textContent = 'Edit';
+  }
+
+  // Add new other expense input item
+  function addOtherExpenseItem() {
+    const item = createOtherExpenseItem('', '');
+    otherExpensesContainer.appendChild(item);
+  }
+
+  // Event listeners
+
+  // On login
+  loginBtn.addEventListener('click', () => {
+    const studentId = studentIdInput.value.trim();
+    if (!studentId) {
+      alert('Please enter a valid Student ID');
+      studentIdInput.focus();
+      return;
+    }
+
+    currentStudentId = studentId;
+    loginScreen.style.display = 'none';
+    trackerScreen.style.display = 'flex';
+
+    welcomeMsg.textContent = `Welcome, Student ID: ${currentStudentId}`;
+
+    // Set date picker to today
+    const today = new Date().toISOString().split('T')[0];
+    datePicker.value = today;
+    changeDate(today);
+
+    trackerScreen.focus();
+  });
+
+  // On Enter key in StudentId field triggers login
+  studentIdInput.addEventListener('keypress', e => {
+    if(e.key === 'Enter') {
+      loginBtn.click();
+    }
+  });
+
+  // On date change
+  datePicker.addEventListener('change', e => {
+    const newDate = e.target.value;
+    if (newDate) {
+      changeDate(newDate);
+    }
+  });
+
+  // On input change update summary live when editing
+  [allowanceInput, transportationInput, mealInput].forEach(input => {
+    input.addEventListener('input', () => {
+      if (isEditing) updateSummary();
+    });
+  });
+
+  // Add other expense button
+  btnAddExpense.addEventListener('click', () => {
+    addOtherExpenseItem();
+  });
+
+  // Clear button
+  clearBtn.addEventListener('click', () => {
+    clearData();
+  });
+
+  // Edit button
+  editBtn.addEventListener('click', () => {
+    toggleEditMode();
+  });
+
+  // Logout button
+  logoutBtn.addEventListener('click', () => {
+    logout();
+  });
+
+  // Initialize: load stored data from localStorage
+  loadData();
+
+})();
+</script>
+
+</body>
+</html>
+
