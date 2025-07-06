@@ -45,6 +45,13 @@
             position: absolute;
             animation: foodMove linear infinite;
             z-index: 1;
+            display: none; /* Hide on smallest screens */
+        }
+
+        @media (min-width: 480px) {
+            .food-particle {
+                display: block;
+            }
         }
 
         @keyframes foodMove {
@@ -86,14 +93,14 @@
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-8 relative z-10">
+    <div class="container mx-auto px-3 md:px-4 py-4 md:py-8 relative z-10">
         <header class="text-center mb-8">
-            <h1 class="text-5xl font-bold text-purple-600 mb-4 floating">The Amazing Esophagus!</h1>
-            <h2 class="text-2xl text-blue-600">Your Food's Super Slide!</h2>
+            <h1 class="text-3xl md:text-5xl font-bold text-purple-600 mb-4 floating">The Amazing Esophagus!</h1>
+            <h2 class="text-xl md:text-2xl text-blue-600">Your Food's Super Slide!</h2>
         </header>
 
-        <div class="flex flex-col lg:flex-row gap-8 items-center mb-12">
-            <div class="lg:w-1/2">
+        <div class="flex flex-col md:flex-row gap-8 items-center mb-8 md:mb-12">
+            <div class="w-full md:w-1/2">
                 <div class="bg-white rounded-3xl p-6 shadow-xl border-4 border-yellow-300 pulse">
                     <h3 class="text-3xl font-bold text-red-500 mb-4">What is the Esophagus?</h3>
                     <p class="text-lg mb-4">The esophagus is like a super slide for your food! It's a muscular tube that connects your mouth to your stomach.</p>
@@ -105,7 +112,7 @@
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
             <div class="bg-blue-100 rounded-3xl p-6 border-4 border-blue-300 hover:scale-105 transition-transform">
                 <div class="text-center mb-4">
                     <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1a84c3c3-8af1-436b-ba8b-5b165d0ac176.png" alt="Length measurement showing esophagus is about 10 inches long" class="mx-auto bounce" />
@@ -164,7 +171,7 @@
         </div>
 
         <div class="text-center mb-12">
-            <button id="quizBtn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full text-xl transition-all transform hover:scale-110">
+            <button id="quizBtn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-full text-lg md:text-xl transition-all transform hover:scale-105 md:hover:scale-110 w-full sm:w-auto">
                 Take the Esophagus Quiz!
             </button>
         </div>
