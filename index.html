@@ -171,57 +171,6 @@
             </div>
         </div>
 
-        <div class="text-center mb-12">
-            <button id="quizBtn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-full text-lg md:text-xl transition-all transform hover:scale-105 md:hover:scale-110 w-full sm:w-auto">
-                Take the Esophagus Quiz!
-            </button>
-        </div>
-
-        <div id="quizSection" class="hidden bg-white rounded-3xl p-8 shadow-xl mb-12">
-            <h3 class="text-3xl font-bold text-indigo-600 mb-6 text-center">Test Your Esophagus Knowledge!</h3>
-            <div class="space-y-6">
-                <div class="quiz-question bg-blue-50 p-4 rounded-xl">
-                    <p class="font-bold text-lg mb-2">1. What is the main job of the esophagus?</p>
-                    <div class="space-y-2">
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q1" class="form-radio text-blue-500">
-                            <span>To chew food</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q1" class="form-radio text-blue-500">
-                            <span>To carry food from mouth to stomach</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q1" class="form-radio text-blue-500">
-                            <span>To digest food</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="quiz-question bg-green-50 p-4 rounded-xl">
-                    <p class="font-bold text-lg mb-2">2. How long does it take food to travel through the esophagus?</p>
-                    <div class="space-y-2">
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q2" class="form-radio text-green-500">
-                            <span>1 minute</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q2" class="form-radio text-green-500">
-                            <span>5-8 seconds</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="q2" class="form-radio text-green-500">
-                            <span>1 hour</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="text-center mt-6">
-                    <button id="submitQuiz" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full transition-all">
-                        Submit Answers
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div class="bg-white rounded-3xl p-8 shadow-xl mb-8">
             <h3 class="text-3xl font-bold text-teal-600 mb-4 text-center">Fun Facts!</h3>
             <div class="grid md:grid-cols-2 gap-6">
@@ -297,18 +246,6 @@
                 container.appendChild(particle);
             });
         }
-
-        // Quiz functionality
-        document.getElementById('quizBtn').addEventListener('click', function() {
-            const quizSection = document.getElementById('quizSection');
-            quizSection.classList.toggle('hidden');
-            this.textContent = quizSection.classList.contains('hidden') ? 
-                'Take the Esophagus Quiz!' : 'Hide Quiz';
-        });
-
-        document.getElementById('submitQuiz').addEventListener('click', function() {
-            alert('Great job! You learned about the amazing esophagus!\n(All answers would be correct in this demo)');
-        });
 
         // Initialize when page loads
         window.addEventListener('DOMContentLoaded', () => {
