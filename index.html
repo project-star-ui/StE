@@ -39,6 +39,7 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
 
         .food-particle {
@@ -226,7 +227,7 @@
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a7d61012-7904-463f-93c2-31e89b641ee3.png" alt="Astronaut in space" class="rounded-full" />
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a7d61012-7904-463f-93c2-31e89b641ee3.png" alt="Astronaut in space" class="rounded-full max-w-[48px] max-h-[48px]" />
                     </div>
                     <div>
                         <h4 class="font-bold text-lg text-teal-700">Space Swallowing</h4>
@@ -235,7 +236,7 @@
                 </div>
                 <div class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed73c661-2688-4780-8b12-85d7a7d089c8.png" alt="Person upside down" class="rounded-full" />
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed73c661-2688-4780-8b12-85d7a7d089c8.png" alt="Person upside down" class="rounded-full max-w-[48px] max-h-[48px]" />
                     </div>
                     <div>
                         <h4 class="font-bold text-lg text-teal-700">Upside Down Eating</h4>
@@ -244,7 +245,7 @@
                 </div>
                 <div class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/178c5bae-a683-49e6-b9e3-598d61fcc38e.png" alt="Person drinking water" class="rounded-full" />
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/178c5bae-a683-49e6-b9e3-598d61fcc38e.png" alt="Person drinking water" class="rounded-full max-w-[48px] max-h-[48px]" />
                     </div>
                     <div>
                         <h4 class="font-bold text-lg text-teal-700">Water Slide</h4>
@@ -253,7 +254,7 @@
                 </div>
                 <div class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/138d068d-edc3-4b62-b746-d0c5f598552c.png" alt="Muscle illustration" class="rounded-full" />
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/138d068d-edc3-4b62-b746-d0c5f598552c.png" alt="Muscle illustration" class="rounded-full max-w-[48px] max-h-[48px]" />
                     </div>
                     <div>
                         <h4 class="font-bold text-lg text-teal-700">Muscle Power</h4>
@@ -288,7 +289,7 @@
                 particle.style.animationDelay = `${index * 2}s`;
                 
                 const img = document.createElement('img');
-                img.src = `https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e75317d4-4da5-40b6-9380-abdd459d8f7e.png
+                img.src = `https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e75317d4-4da5-40b6-9380-abdd459d8f7e.png`; // Corrected image source
                 img.alt = food.alt;
                 img.className = 'rounded-full';
                 
@@ -325,4 +326,3 @@
     </script>
 </body>
 </html>
-
